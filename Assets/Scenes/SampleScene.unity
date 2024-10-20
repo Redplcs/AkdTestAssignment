@@ -636,7 +636,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _pickedItemOrigin: {fileID: 1546550500}
-  _rangeToPick: 2
+  _pickingRange: 2.5
 --- !u!1 &1455669013
 GameObject:
   m_ObjectHideFlags: 0
