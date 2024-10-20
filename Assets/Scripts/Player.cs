@@ -4,47 +4,40 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
 	[SerializeField] private Transform _pickedItemOrigin;
-	[SerializeField] private float _rangeToPick;
+	[SerializeField] private float _pickingRange;
 
-	private PickableItem[] _items;
+	private PickableItem _pickedItem;
 
-	public bool IsHolding { get; private set; }
-
-	private void Start()
-	{
-		_items = FindObjectsByType<PickableItem>(FindObjectsSortMode.None);
-	}
+	public bool IsHolding => _pickedItem != null;
 
 	private void FixedUpdate()
 	{
-		foreach (var item in _items)
+		if (IsHolding)
 		{
-			var distance = (item.transform.position - transform.position).magnitude;
-
-			if (distance < _rangeToPick)
-			{
-				Take(item);
-			}
+			_pickedItem.transform.position = _pickedItemOrigin.position;
 		}
-	}
-
-	public void Take(PickableItem item)
-	{
-		item.Take();
-		item.transform.position = _pickedItemOrigin.position;
 	}
 
 	public bool TryTakeClosestItem()
 	{
-		Debug.Log("Item took!");
-		IsHolding = true;
-		return true;
+		foreach (var item in FindObjectsByType<PickableItem>(FindObjectsSortMode.None))
+		{
+			var distance = (item.transform.position - transform.position).magnitude;
+
+			if (distance < _pickingRange)
+			{
+				item.Take();
+				_pickedItem = item;
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	public bool TryPutItem()
 	{
-		Debug.Log("Item placed!");
-		IsHolding = false;
+		_pickedItem = null;
 		return true;
 	}
 }
