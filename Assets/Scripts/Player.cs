@@ -1,8 +1,10 @@
 using UnityEngine;
 
 [RequireComponent(typeof(Transform))]
+[RequireComponent(typeof(Truck))]
 public class Player : MonoBehaviour
 {
+	[SerializeField] private Truck _truck;
 	[SerializeField] private Transform _pickedItemOrigin;
 	[SerializeField] private float _pickingRange;
 
@@ -37,7 +39,17 @@ public class Player : MonoBehaviour
 
 	public bool TryPutItem()
 	{
-		_pickedItem = null;
-		return true;
+		if (IsHolding)
+		{
+			if (_truck.IsPlayerOnRange)
+			{
+				_truck.Place(_pickedItem);
+			}
+
+			_pickedItem = null;
+			return true;
+		}
+
+		return false;
 	}
 }
