@@ -15,7 +15,7 @@ public class Truck : MonoBehaviour
 
 	private void OnTriggerEnter(Collider other)
 	{
-		if (other.TryGetComponent<Player>(out _))
+		if (other.IsPlayer())
 		{
 			IsPlayerOnRange = true;
 		}
@@ -23,7 +23,7 @@ public class Truck : MonoBehaviour
 
 	private void OnTriggerExit(Collider other)
 	{
-		if (other.TryGetComponent<Player>(out _))
+		if (other.IsPlayer())
 		{
 			IsPlayerOnRange = false;
 		}

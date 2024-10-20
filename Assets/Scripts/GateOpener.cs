@@ -8,7 +8,7 @@ public class GateOpener : MonoBehaviour
 
 	private void OnTriggerEnter(Collider other)
 	{
-		if (other.TryGetComponent<Player>(out _))
+		if (other.IsPlayer())
 		{
 			Open();
 		}
@@ -16,7 +16,7 @@ public class GateOpener : MonoBehaviour
 
 	private void OnTriggerExit(Collider other)
 	{
-		if (other.TryGetComponent<Player>(out _))
+		if (other.IsPlayer())
 		{
 			Close();
 		}
