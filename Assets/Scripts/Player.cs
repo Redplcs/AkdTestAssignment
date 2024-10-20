@@ -8,6 +8,8 @@ public class Player : MonoBehaviour
 
 	private PickableItem[] _items;
 
+	public bool IsHolding { get; private set; }
+
 	private void Start()
 	{
 		_items = FindObjectsByType<PickableItem>(FindObjectsSortMode.None);
@@ -30,5 +32,19 @@ public class Player : MonoBehaviour
 	{
 		item.Take();
 		item.transform.position = _pickedItemOrigin.position;
+	}
+
+	public bool TryTakeClosestItem()
+	{
+		Debug.Log("Item took!");
+		IsHolding = true;
+		return true;
+	}
+
+	public bool TryPutItem()
+	{
+		Debug.Log("Item placed!");
+		IsHolding = false;
+		return true;
 	}
 }

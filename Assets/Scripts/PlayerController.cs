@@ -1,8 +1,10 @@
 using UnityEngine;
 
+[RequireComponent(typeof(Player))]
 [RequireComponent(typeof(CharacterController))]
 public class PlayerController : MonoBehaviour
 {
+	[SerializeField] private Player _player;
 	[SerializeField] private CharacterController _characterController;
 	[SerializeField] private Transform _view;
 	[SerializeField] private float _speed = 1.0f;
@@ -10,16 +12,36 @@ public class PlayerController : MonoBehaviour
 
 	private Vector2 _wishDir;
 	private Vector2 _deltaMouse;
+	private bool _interactPressed;
+	private bool _interactHolding;
 
 	private void FixedUpdate()
 	{
 		ProcessMovement();
+		ProcessPicking();
 	}
 
 	private void Update()
 	{
 		UpdateUserInput();
 		ProcessViewing();
+	}
+
+	private void ProcessPicking()
+	{
+		if (_interactPressed && !_interactHolding)
+		{
+			if (_player.IsHolding)
+			{
+				_player.TryPutItem();
+			}
+			else
+			{
+				_player.TryTakeClosestItem();
+			}
+		}
+
+		_interactHolding = _interactPressed;
 	}
 
 	private void ProcessMovement()
@@ -51,5 +73,7 @@ public class PlayerController : MonoBehaviour
 		_deltaMouse = new Vector2(
 			Input.GetAxis("Mouse X"),
 			Input.GetAxis("Mouse Y"));
+
+		_interactPressed = Input.GetAxis("Jump") > 0;
 	}
 }
