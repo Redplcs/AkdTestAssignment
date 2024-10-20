@@ -489,7 +489,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _characterController: {fileID: 1437906773}
+  _view: {fileID: 963194228}
   _speed: 5
+  _sensitivity: 1
 --- !u!1 &1455669013
 GameObject:
   m_ObjectHideFlags: 0
