@@ -1,10 +1,20 @@
-using System;
 using UnityEngine;
 
 public class GateOpener : MonoBehaviour
 {
 	[SerializeField] private Transform _movingPart;
-	[SerializeField] private AnimationCurve _animation;
+
+	private Vector3 _positionInClosedState;
+	private Vector3 _positionInOpenedState;
+
+	private void Start()
+	{
+		_positionInClosedState = transform.position;
+		_positionInClosedState.y += 2.0f;
+
+		_positionInOpenedState = _positionInClosedState;
+		_positionInOpenedState.y += 4.0f;
+	}
 
 	private void OnTriggerEnter(Collider other)
 	{
@@ -24,11 +34,11 @@ public class GateOpener : MonoBehaviour
 
 	public void Close()
 	{
-		throw new NotImplementedException();
+		_movingPart.transform.position = _positionInClosedState;
 	}
 
 	public void Open()
 	{
-		throw new NotImplementedException();
+		_movingPart.transform.position = _positionInOpenedState;
 	}
 }
